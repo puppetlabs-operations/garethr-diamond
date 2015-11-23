@@ -60,6 +60,12 @@
 # [*install_from_pip*]
 #   Determine if we should install diamond from python-pip
 #
+# [*manage_epel*]
+#   Determine if we should include the epel module on RedHat nodes
+#
+# [*manage_pip*]
+#   Determine if we should manage the pip package
+#
 # [*rotate_days*]
 #   Number of days of rotate logs to keep
 #
@@ -89,8 +95,10 @@ class diamond(
   $hostname_method   = undef,
   $handlers_path     = undef,
   $purge_collectors  = false,
-  $install_from_pip  = false,
-) {
+  $install_from_pip  = $diamond::params::install_from_pip,
+  $manage_epel       = true,
+  $manage_pip        = true,
+) inherits diamond::params {
   class{'diamond::install': } ->
   class{'diamond::config': } ~>
   class{'diamond::service': } ->
